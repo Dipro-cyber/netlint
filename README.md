@@ -41,7 +41,7 @@ pip install -e ".[dev]"
 
 ## Supported File Extensions & Formats
 
-NetLint maintains a centralized extension registry decoupling file extensions from vendor identification. Custom extensions (e.g. `router.backup`), files with uppercase extensions (`.CFG`, `.YML`), unknown extensions (`.xyz`), and files without extensions are also fully supported when specified directly.
+netlint maintains a centralized extension registry decoupling file extensions from vendor identification. Custom extensions (e.g. `router.backup`), files with uppercase extensions (`.CFG`, `.YML`), unknown extensions (`.xyz`), and files without extensions are also fully supported when specified directly.
 
 | Extension | Format | Vendor | Parser Status |
 |---|---|---|---|
