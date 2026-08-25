@@ -36,7 +36,7 @@ class WeakSshRule(Rule):
         "Configure 'ip ssh version 2' globally.  Generate RSA keys with "
         "'crypto key generate rsa modulus 2048' if not already present."
     )
-    vendors = ("cisco-ios",)
+    vendors = ("cisco-ios", "juniper", "arista", "juniper-junos", "arista-eos")
 
     def check(
         self,

@@ -36,7 +36,7 @@ class ShutdownInterfaceRule(Rule):
         "If it is intentionally disabled, remove unused configuration "
         "to reduce clutter."
     )
-    vendors = ("cisco-ios",)
+    vendors = ("cisco-ios", "juniper", "arista", "juniper-junos", "arista-eos")
 
     def check(
         self,

@@ -75,7 +75,7 @@ class TestRulesCommand:
         assert "NET001" in result.output
 
     def test_unknown_vendor_returns_no_rules(self):
-        result = invoke("rules", "--vendor", "juniper")
+        result = invoke("rules", "--vendor", "nonexistent-vendor")
         assert result.exit_code == 0
         assert "No rules" in result.output
 

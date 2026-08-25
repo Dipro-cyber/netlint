@@ -50,7 +50,7 @@ class OspfConfigRule(Rule):
         "to the backbone, and a stable router-id is set under "
         "'router ospf <pid>'."
     )
-    vendors = ("cisco-ios",)
+    vendors = ("cisco-ios", "juniper", "arista", "juniper-junos", "arista-eos")
 
     def check(
         self,

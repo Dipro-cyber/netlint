@@ -54,8 +54,11 @@ class ConfigFile(BaseModel):
         return self
 
     @classmethod
-    def from_path(cls, path: Path | str, vendor: str = "cisco-ios") -> ConfigFile:
-        """Load a ConfigFile from a file path."""
+    def from_path(cls, path: Path | str, vendor: str = "auto") -> ConfigFile:
+        """Load a ConfigFile from a file path with automatic vendor detection."""
         resolved = Path(path).resolve()
         raw_text = resolved.read_text(encoding="utf-8")
+        if vendor == "auto" or not vendor:
+            from netlint.parser.detector import detect_vendor
+            vendor = detect_vendor(raw_text)
         return cls(file_path=resolved, raw_text=raw_text, vendor=vendor, lines=())

@@ -37,7 +37,7 @@ class MissingDefaultRouteRule(Rule):
         "If the device is a pure switch with SVIs only, verify that "
         "upstream routing is intentional."
     )
-    vendors = ("cisco-ios",)
+    vendors = ("cisco-ios", "juniper", "arista", "juniper-junos", "arista-eos")
 
     def check(
         self,

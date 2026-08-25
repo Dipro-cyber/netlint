@@ -50,7 +50,7 @@ class HttpServerEnabledRule(Rule):
         "'ip http secure-server' and restrict access with "
         "'ip http access-class <ACL>'."
     )
-    vendors = ("cisco-ios",)
+    vendors = ("cisco-ios", "juniper", "arista", "juniper-junos", "arista-eos")
 
     def check(
         self,

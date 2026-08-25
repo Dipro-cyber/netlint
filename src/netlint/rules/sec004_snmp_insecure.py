@@ -40,7 +40,7 @@ class InsecureSnmpRule(Rule):
         "'snmp-server group' and 'snmp-server user' for authenticated, "
         "encrypted management access."
     )
-    vendors = ("cisco-ios",)
+    vendors = ("cisco-ios", "juniper", "arista", "juniper-junos", "arista-eos")
 
     def check(
         self,

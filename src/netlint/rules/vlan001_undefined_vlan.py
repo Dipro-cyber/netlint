@@ -42,7 +42,7 @@ class UndefinedVlanRule(Rule):
         "'name <name>'), or correct the access VLAN assignment on the "
         "interface to reference a VLAN that is already defined."
     )
-    vendors = ("cisco-ios",)
+    vendors = ("cisco-ios", "juniper", "arista", "juniper-junos", "arista-eos")
 
     def check(
         self,

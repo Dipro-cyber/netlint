@@ -49,7 +49,7 @@ class OverlappingSubnetsRule(Rule):
         "a non-overlapping subnet.  Use 'show ip route' to verify routing "
         "table correctness after making changes."
     )
-    vendors = ("cisco-ios",)
+    vendors = ("cisco-ios", "juniper", "arista", "juniper-junos", "arista-eos")
 
     def check(
         self,

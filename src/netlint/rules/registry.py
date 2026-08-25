@@ -75,13 +75,15 @@ class RuleRegistry:
     @classmethod
     def get_for_vendor(cls, vendor: str) -> list[type[Rule]]:
         """
-        Return all rule classes whose ``vendors`` tuple includes *vendor*.
-
-        Uses class-level attributes — no rule instances are created.
+        Return all rule classes whose ``vendors`` tuple includes *vendor* or "all".
         """
+        if not vendor:
+            return list(cls._rules.values())
+
         return [
             r for r in cls._rules.values()
             if vendor in getattr(r, "vendors", ())
+            or "all" in getattr(r, "vendors", ())
         ]
 
     @classmethod

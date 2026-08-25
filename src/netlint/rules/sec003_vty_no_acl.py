@@ -38,7 +38,7 @@ class VtyNoAclRule(Rule):
         "and apply it to all VTY lines with "
         "'access-class <ACL-NAME> in'."
     )
-    vendors = ("cisco-ios",)
+    vendors = ("cisco-ios", "juniper", "arista", "juniper-junos", "arista-eos")
 
     def check(
         self,

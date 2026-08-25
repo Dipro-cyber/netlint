@@ -39,7 +39,7 @@ class DuplicateIpRule(Rule):
         "Assign a unique IPv4 address to every interface.  Audit all "
         "'ip address' statements and remove any duplicates."
     )
-    vendors = ("cisco-ios",)
+    vendors = ("cisco-ios", "juniper", "arista", "juniper-junos", "arista-eos")
 
     def check(
         self,

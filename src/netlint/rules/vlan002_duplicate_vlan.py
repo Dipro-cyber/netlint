@@ -36,7 +36,7 @@ class DuplicateVlanRule(Rule):
         "Remove the duplicate 'vlan <id>' block and consolidate VLAN "
         "settings into a single stanza."
     )
-    vendors = ("cisco-ios",)
+    vendors = ("cisco-ios", "juniper", "arista", "juniper-junos", "arista-eos")
 
     def check(
         self,

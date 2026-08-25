@@ -61,7 +61,7 @@ class MissingDescriptionRule(Rule):
         "Add a descriptive 'description' line to every interface, "
         "e.g. 'description Uplink to DIST-SW-01'."
     )
-    vendors = ("cisco-ios",)
+    vendors = ("cisco-ios", "juniper", "arista", "juniper-junos", "arista-eos")
 
     def check(
         self,

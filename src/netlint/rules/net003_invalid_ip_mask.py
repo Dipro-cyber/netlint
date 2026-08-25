@@ -39,7 +39,7 @@ class InvalidIpMaskRule(Rule):
         "use a standard subnet mask (e.g. 255.255.255.0). "
         "Verify with 'show ip interface brief' after applying the fix."
     )
-    vendors = ("cisco-ios",)
+    vendors = ("cisco-ios", "juniper", "arista", "juniper-junos", "arista-eos")
 
     def check(
         self,

@@ -36,7 +36,7 @@ class BgpConfigRule(Rule):
         "remote-as <asn>'.  Verify the AS number and peering address "
         "with 'show bgp summary'."
     )
-    vendors = ("cisco-ios",)
+    vendors = ("cisco-ios", "juniper", "arista", "juniper-junos", "arista-eos")
 
     def check(
         self,

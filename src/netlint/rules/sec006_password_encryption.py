@@ -53,7 +53,7 @@ class PasswordEncryptionRule(Rule):
         "'password' and 'enable password' statements with "
         "'enable secret' and Type-7 or AAA-based authentication."
     )
-    vendors = ("cisco-ios",)
+    vendors = ("cisco-ios", "juniper", "arista", "juniper-junos", "arista-eos")
 
     def check(
         self,

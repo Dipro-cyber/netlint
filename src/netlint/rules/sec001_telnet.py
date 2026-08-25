@@ -51,7 +51,7 @@ class TelnetEnabledRule(Rule):
         "VTY lines.  Ensure SSHv2 is enabled globally with "
         "'ip ssh version 2' and that RSA keys are generated."
     )
-    vendors = ("cisco-ios",)
+    vendors = ("cisco-ios", "juniper", "arista", "juniper-junos", "arista-eos")
 
     def check(
         self,

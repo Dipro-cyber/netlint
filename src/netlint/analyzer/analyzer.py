@@ -38,19 +38,19 @@ class Analyzer:
             print(finding.severity.value.upper(), finding.message)
     """
 
-    def run(self, path: Path | str, vendor: str = "cisco-ios") -> AnalysisResult:
+    def run(self, path: Path | str, vendor: str = "auto") -> AnalysisResult:
         """
         Load *path*, parse it, run all rules, and return the result.
 
         :param path:   Path to the configuration file.
-        :param vendor: Vendor identifier (default: ``"cisco-ios"``).
+        :param vendor: Vendor identifier (default: ``"auto"`` for auto-detection).
         :raises FileNotFoundError: If *path* does not exist.
         :raises ParseError: If the file cannot be parsed.
         """
         config = ConfigFile.from_path(path, vendor=vendor)
         return self._analyze(config)
 
-    def run_batch(self, paths: list[Path | str], vendor: str = "cisco-ios") -> list[AnalysisResult]:
+    def run_batch(self, paths: list[Path | str], vendor: str = "auto") -> list[AnalysisResult]:
         """
         Run analysis on a list of configuration file paths.
         """
@@ -59,7 +59,7 @@ class Analyzer:
             results.append(self.run(p, vendor=vendor))
         return results
 
-    def run_path(self, path_or_pattern: Path | str, vendor: str = "cisco-ios") -> list[AnalysisResult]:
+    def run_path(self, path_or_pattern: Path | str, vendor: str = "auto") -> list[AnalysisResult]:
         """
         Resolve *path_or_pattern* (file, directory, or glob pattern) and analyze
         all matching configuration files.

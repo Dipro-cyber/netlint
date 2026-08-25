@@ -59,7 +59,7 @@ class UnusedVlanRule(Rule):
         "interface.  Stale VLANs increase configuration complexity and "
         "audit surface."
     )
-    vendors = ("cisco-ios",)
+    vendors = ("cisco-ios", "juniper", "arista", "juniper-junos", "arista-eos")
 
     def check(
         self,

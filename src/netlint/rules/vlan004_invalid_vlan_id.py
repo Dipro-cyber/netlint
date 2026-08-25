@@ -35,7 +35,7 @@ class InvalidVlanIdRule(Rule):
     recommendation = (
         "Use a VLAN ID between 1 and 4094.  VLAN 0 and 4095 are reserved."
     )
-    vendors = ("cisco-ios",)
+    vendors = ("cisco-ios", "juniper", "arista", "juniper-junos", "arista-eos")
 
     def check(
         self,
