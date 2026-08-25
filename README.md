@@ -1,8 +1,8 @@
-# NetLint
+# netlint
 
 Static analyzer for network device configuration files.
 
-NetLint inspects Cisco IOS (and future vendor) configs **before deployment**
+netlint inspects Cisco IOS (and future vendor) configs **before deployment**
 and catches problems like:
 
 - Duplicate IP addresses
@@ -41,7 +41,7 @@ pip install -e ".[dev]"
 
 ## Supported File Extensions
 
-NetLint automatically discovers and supports all standard network configuration file extensions:
+netlint automatically discovers and supports all standard network configuration file extensions:
 
 - `.cfg` (Cisco, VyOS, Fortinet)
 - `.conf` (BGP/FRR, OpenWRT, Arista)
