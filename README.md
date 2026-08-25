@@ -39,19 +39,33 @@ pip install -e ".[dev]"
 
 ---
 
-## Supported File Extensions
+## Supported File Extensions & Formats
 
-netlint automatically discovers and supports all standard network configuration file extensions:
+NetLint maintains a centralized extension registry decoupling file extensions from vendor identification. Custom extensions (e.g. `router.backup`), files with uppercase extensions (`.CFG`, `.YML`), unknown extensions (`.xyz`), and files without extensions are also fully supported when specified directly.
 
-- `.cfg` (Cisco, VyOS, Fortinet)
-- `.conf` (BGP/FRR, OpenWRT, Arista)
-- `.config` (Generic network configs)
-- `.txt` (Plain text config exports)
-- `.ios` (Cisco IOS / IOS-XE exports)
-- `.set` (Juniper set-format configs)
-- `.log` (Console / terminal session logs)
-
-*Note: Custom extensions (e.g. `router.backup`) are also fully supported when specified directly.*
+| Extension | Format | Vendor | Parser Status |
+|---|---|---|---|
+| `.cfg` | CLI | Cisco IOS, Arista, VyOS | Fully supported (Cisco IOS) |
+| `.conf` | CLI | BGP/FRR, Juniper, OpenWRT | Fully supported (Cisco) / Partial (Juniper) |
+| `.config` | CLI | Generic network configs | Text CLI fallback / Fully supported (Cisco) |
+| `.txt` | CLI | Plain text config exports | Text CLI fallback |
+| `.ios` | CLI | Cisco IOS / IOS-XE | Fully supported |
+| `.set` | CLI | Juniper JunOS | Partial (JunOS set commands) |
+| `.log` | CLI | Console / session logs | Text CLI fallback |
+| `.cli` | CLI | Generic network CLI | Text CLI fallback |
+| `.backup` | CLI | Backup configuration | Text CLI fallback |
+| `.bak` | CLI | Backup configuration | Text CLI fallback |
+| `.running` | CLI | Running configuration | Text CLI fallback |
+| `.startup` | CLI | Startup configuration | Text CLI fallback |
+| `.junos` | CLI | Juniper JunOS | Partial (JunOS parser) |
+| `.nxos` | CLI | Cisco NX-OS | Recognized (Text fallback active) |
+| `.eos` | CLI | Arista EOS | Partial (Arista parser) |
+| `.vyos` | CLI | VyOS | Recognized (Text fallback active) |
+| `.rsc` | MikroTik Script | MikroTik RouterOS | Recognized (Text fallback active) |
+| `.yaml` | YAML | VyOS, Ansible | Recognized (Structured syntax check active) |
+| `.yml` | YAML | VyOS, Ansible | Recognized (Structured syntax check active) |
+| `.json` | JSON | Generic structured | Recognized (Structured syntax check active) |
+| `.xml` | XML | Juniper JunOS XML | Recognized (Structured syntax check active) |
 
 ---
 

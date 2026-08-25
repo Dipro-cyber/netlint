@@ -118,14 +118,18 @@ def analyze(
     config_file: Annotated[
         Path,
         typer.Argument(
-            help="Path to the network device configuration file.",
+            help=(
+                "Path to network configuration file (.cfg, .conf, .config, .txt, .ios, .set, .log, "
+                ".yaml, .yml, .json, .xml, .cli, .backup, .bak, .running, .startup, .rsc, .junos, "
+                ".nxos, .eos, .vyos), directory, or pattern."
+            ),
             resolve_path=True,
         ),
     ],
     vendor: Annotated[
         str,
-        typer.Option("--vendor", "-V", help="Vendor format (default: cisco-ios)."),
-    ] = "cisco-ios",
+        typer.Option("--vendor", "-V", help="Vendor format (default: auto for auto-detection)."),
+    ] = "auto",
     severity: Annotated[
         str | None,
         typer.Option(

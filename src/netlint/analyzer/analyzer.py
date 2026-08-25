@@ -103,24 +103,80 @@ class Analyzer:
     def _parse(self, config: ConfigFile) -> tuple[Any, list[str]]:
         """
         Invoke the vendor parser and return (parsed_data, warnings).
-
-        Returns ``(None, [])`` when no parser is registered — rules that
-        need parsed data should handle ``parsed is None`` gracefully.
+        Handles extension validation and parser warnings for unmapped/structured formats.
         """
+        from netlint.registry.extension_registry import ExtensionRegistry
+        meta = ExtensionRegistry.lookup(config.file_path)
+        warnings: list[str] = []
+
+        # Validate structured files syntax if content exists
+        if meta.is_structured and config.raw_text.strip():
+            struct_err = self._validate_structured_syntax(config, meta)
+            if struct_err:
+                # If misleading extension (e.g. Cisco CLI saved as router.json)
+                if config.vendor in ParserRegistry.supported_vendors():
+                    warnings.append(
+                        f"Extension '{meta.extension}' expects structured format '{meta.likely_format}', "
+                        f"but content matches '{config.vendor}' CLI syntax. Performing CLI text fallback analysis."
+                    )
+                else:
+                    raise ParseError(struct_err)
+            else:
+                warnings.append(
+                    f"Format '{meta.likely_format}' (extension '{meta.extension}') is recognized, "
+                    f"but vendor-specific structured schema mapping to Common IR is not yet implemented for vendor '{config.vendor}'."
+                )
+        elif meta.likely_vendors and config.vendor not in ParserRegistry.supported_vendors():
+            warnings.append(
+                f"Vendor '{config.vendor}' (extension '{meta.extension}') is recognized, "
+                f"but full parser for '{config.vendor}' is not yet implemented. Performing text fallback analysis."
+            )
+
         try:
             parser_cls = ParserRegistry.get(config.vendor)
         except KeyError:
-            return None, []
+            if not warnings:
+                warnings.append(
+                    f"No parser registered for vendor '{config.vendor}' (extension '{meta.extension}'). "
+                    f"Performing generic text analysis."
+                )
+            return None, warnings
 
         try:
             parser = parser_cls()
             result = parser.parse(config)
-            warnings: list[str] = getattr(result, "warnings", [])
+            p_warnings: list[str] = getattr(result, "warnings", [])
+            warnings.extend(p_warnings)
             return result, warnings
         except ParseError:
             raise
         except Exception as exc:  # noqa: BLE001
-            return None, [f"Parser error: {exc}"]
+            return None, warnings + [f"Parser error: {exc}"]
+
+    def _validate_structured_syntax(self, config: ConfigFile, meta: Any) -> str | None:
+        """Validate JSON, YAML, or XML syntax. Returns error message if invalid, None if valid."""
+        raw = config.raw_text
+        if meta.likely_format == "json":
+            import json
+            try:
+                json.loads(raw)
+                return None
+            except Exception as exc:
+                return f"Invalid JSON syntax in {config.file_path.name}: {exc}"
+        elif meta.likely_format == "yaml":
+            import re
+            for line_no, line in enumerate(raw.splitlines(), 1):
+                if re.match(r"^\t+[^\s]", line):
+                    return f"Invalid YAML syntax in {config.file_path.name} at line {line_no}: tabs not allowed for indentation"
+            return None
+        elif meta.likely_format == "xml":
+            import xml.etree.ElementTree as ET
+            try:
+                ET.fromstring(raw)
+                return None
+            except Exception as exc:
+                return f"Invalid XML syntax in {config.file_path.name}: {exc}"
+        return None
 
     def _run_rules(
         self,
